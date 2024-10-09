@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Select } from "../../components/Select/Select";
 import { SelectItem } from "../../components/Select/SelectItem";
 import type { SubmitHandler } from "react-hook-form";
@@ -36,10 +36,8 @@ export default function UserForm({
     defaultValues,
   });
 
-  const isSubmitFormDisabled = useMemo(
-    () => isFormLoading || Object.keys(errors ?? {}).length > 0,
-    [errors, isFormLoading],
-  );
+  const isSubmitFormDisabled =
+    isFormLoading || Object.keys(errors ?? {}).length > 0;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="relative">
