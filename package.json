@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "start:api": "node scripts/build/start-api.js",
-    "build:api": "node scripts/build/build-api.js",
+    "start:api": "turbo build --filter=\"{./apps/api}...\"",
+    "build:api": "cd ./apps/api && npm run start",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
