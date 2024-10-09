@@ -15,4 +15,5 @@ function runCommand(command) {
   }
 }
 
-runCommand('cd apps/api && npm run start');
+runCommand('cd apps/api && npm run build');
+runCommand('cd apps/api && NODE_ENV=production node dist/server.js');
