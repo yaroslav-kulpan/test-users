@@ -23,7 +23,10 @@ function verifyDirectoryExists(directoryPath) {
   }
 }
 
-const apiDir = path.join(proces.cwd(), './apps/api');
+const apiDir = path.join(process.cwd(), './apps/api');
+
+console.info(process.cwd());
+
 verifyDirectoryExists(apiDir);
 
 console.log('Starting production server...');
