@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, PropsWithChildren } from 'react';
-import { modalActionsStyles } from './modal.theme';
+import { modalActionsStyles } from './Modal.theme';
 import React from "react";
 
 type IModalActionsProps = ComponentPropsWithoutRef<'div'>;

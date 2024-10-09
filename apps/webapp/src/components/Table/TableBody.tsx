@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import { tableBody } from './table.theme';
+import { tableBody } from "./Table.theme";
 
-type TableBodyProps = React.ComponentPropsWithoutRef<'tbody'>;
+type TableBodyProps = React.ComponentPropsWithoutRef<"tbody">;
 
 export const TableBody = React.forwardRef<
   HTMLTableSectionElement,
@@ -14,6 +14,5 @@ export const TableBody = React.forwardRef<
     </tbody>
   );
 });
-
 
 export default TableBody;

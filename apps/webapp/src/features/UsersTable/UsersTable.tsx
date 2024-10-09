@@ -1,20 +1,17 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
 
-import Table from "../../components/table/table";
+import Table from "../../components/Table/Table";
 import TablePagination from "../../components/TablePagination/TablePagination";
 import {
   TableBody,
-  TableCell,
   TableColumn,
   TableHeader,
-  TableRow,
-} from "../../components/table";
-import { humanizeDate } from "../../utils/humanize-date";
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
+} from "../../components/Table";
 import { User, UsersListResponse } from "../../types/users.interface";
 import Button from "../../components/Button";
 import { FullScreenLoader } from "../../components/FullScreenLoader";
+import { UserTableRow } from "../UserTableRow";
 
 type UsersTableProps = {
   users: User[];
@@ -31,7 +28,6 @@ type UsersTableProps = {
 };
 
 const COLUMNS: string[] = [
-  "id",
   "Email",
   "First name",
   "Last name",
@@ -57,39 +53,6 @@ export function UsersTable({
   handleNextPage,
   handlePrevPage,
 }: UsersTableProps) {
-  const rows = useMemo(() => {
-    return users?.map((user) => (
-      <TableRow className="group" key={user.id} rowKey={user}>
-        <TableCell>{user?.id}</TableCell>
-        <TableCell>{user?.email}</TableCell>
-        <TableCell>{user?.first_name}</TableCell>
-        <TableCell>{user?.last_name}</TableCell>
-        <TableCell>{user?.profile?.age}</TableCell>
-        <TableCell>{user?.profile?.gender}</TableCell>
-        <TableCell>{user?.profile?.height}</TableCell>
-        <TableCell>{user?.profile?.weight}</TableCell>
-        <TableCell>{humanizeDate(user.createdAt)}</TableCell>
-        <TableCell>{humanizeDate(user.updatedAt)}</TableCell>
-        <TableCell className="flex gap-x-3 justify-end" align="center">
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleEdit(user.id)}
-          >
-            <PencilIcon className="h-4 w-4 text-white" />
-          </Button>
-          <Button
-            variant="contained"
-            color="danger"
-            onClick={handleDelete(user.id)}
-          >
-            <TrashIcon className="h-4 w-4 text-white" />
-          </Button>
-        </TableCell>
-      </TableRow>
-    ));
-  }, [users, handleEdit, handleDelete]);
-
   return error ? (
     <>Oh no, there was an error</>
   ) : isLoading ? (
@@ -99,7 +62,7 @@ export function UsersTable({
       {isTableLoading && <FullScreenLoader />}
       <Table
         list={users}
-        caption="Users"
+        caption={`Users, total - ${total}`}
         rightControls={
           <div className="flex gap-x-3">
             <Button variant="outlined" color="primary" onClick={refetch}>
@@ -112,8 +75,6 @@ export function UsersTable({
           <TablePagination
             handleNext={handleNextPage}
             handlePrevious={handlePrevPage}
-            total={total}
-            limit={users.length}
           />
         }
         emptyState={
@@ -127,7 +88,16 @@ export function UsersTable({
             <TableColumn key={tablesColum}>{tablesColum}</TableColumn>
           ))}
         </TableHeader>
-        <TableBody>{rows}</TableBody>
+        <TableBody>
+          {users.map((user) => (
+            <UserTableRow
+              key={user.id}
+              user={user}
+              handleEdit={handleEdit}
+              handleDelete={handleDelete}
+            />
+          ))}
+        </TableBody>
       </Table>
     </>
   ) : null;

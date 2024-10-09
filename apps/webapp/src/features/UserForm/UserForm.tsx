@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Select } from "../../components/Select/Select";
 import { SelectItem } from "../../components/Select/SelectItem";
 import type { SubmitHandler } from "react-hook-form";
@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import type { CreateUserDto } from "../../types/users.interface";
 import { GenderEnum } from "../../types/users-profile.interface";
 import Button from "../../components/Button";
-import { modalActionsStyles } from "../../components/Modal/modal.theme";
+import { modalActionsStyles } from "../../components/Modal/Modal.theme";
 import { Input } from "../../components/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { userFormValidationSchema } from "./user-form-validation.schema";
@@ -35,6 +35,11 @@ export default function UserForm({
     resolver: yupResolver(userFormValidationSchema),
     defaultValues,
   });
+
+  const isSubmitFormDisabled = useMemo(
+    () => isFormLoading || Object.keys(errors ?? {}).length > 0,
+    [errors, isFormLoading],
+  );
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="relative">
@@ -146,7 +151,7 @@ export default function UserForm({
             variant="contained"
             color="primary"
             type="submit"
-            disabled={isFormLoading || Object.keys(errors ?? {}).length > 0}
+            disabled={isSubmitFormDisabled}
           >
             Save
           </Button>

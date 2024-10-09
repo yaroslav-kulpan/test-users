@@ -1,6 +1,6 @@
 import React from "react";
 import { Transition } from "@headlessui/react";
-import { modalStyles } from "./modal.theme";
+import { modalStyles } from "./Modal.theme";
 
 type ModalProps = {
   open: boolean;

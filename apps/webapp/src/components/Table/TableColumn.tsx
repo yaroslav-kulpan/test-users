@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import { tableColumn, TableColumnVariants } from './table.theme';
+import { tableColumn, TableColumnVariants } from "./Table.theme";
 
-type TableColumnProps = React.ComponentPropsWithoutRef<'th'> &
+type TableColumnProps = React.ComponentPropsWithoutRef<"th"> &
   TableColumnVariants;
 
 export const TableColumn = React.forwardRef<

@@ -15,7 +15,7 @@ import UserForm from "../../features/UserForm/UserForm";
 import { UsersTable } from "../../features/UsersTable";
 import { Container } from "../../components/Container";
 import type { CreateUserDto, User } from "../../types/users.interface";
-import { Dialog } from "../../features/Dialog";
+import { DeleteUserDialog } from "../../features/DeleteUserDialog";
 import { useQueryParams } from "../../hooks/use-query-params";
 
 const modals = ["add", "edit"] as const;
@@ -37,7 +37,7 @@ export function Users() {
     status: reFetchStatus,
     refetch: reFetchUsers,
   } = useGetUsersQuery({
-    limit: queryParams.limit ? Number(queryParams.limit): 10,
+    limit: queryParams.limit ? Number(queryParams.limit) : 10,
     offset: queryParams.offset ? Number(queryParams.offset) : 0,
   });
   const { data: users = [], total = 0 } = data ?? {};
@@ -77,26 +77,29 @@ export function Users() {
     [],
   );
 
-  const handleSubmitUser = async (userData: CreateUserDto) => {
-    try {
-      if (modalType === "add") {
-        await createUser(userData).unwrap();
-        toast(`User ${userData.email} created successfully`, {
-          type: "success",
-        });
-      } else if (modalType === "edit" && userId) {
-        await updateUser({ id: userId, userData }).unwrap();
-        toast(`User ${userData.email} updated successfully`, {
-          type: "success",
+  const handleSubmitUser = useCallback(
+    async (userData: CreateUserDto) => {
+      try {
+        if (modalType === "add") {
+          await createUser(userData).unwrap();
+          toast(`User ${userData.email} created successfully`, {
+            type: "success",
+          });
+        } else if (modalType === "edit" && userId) {
+          await updateUser({ id: userId, userData }).unwrap();
+          toast(`User ${userData.email} updated successfully`, {
+            type: "success",
+          });
+        }
+        closeModal();
+      } catch (err: any) {
+        toast(err?.data?.message ?? "Something went wrong", {
+          type: "error",
         });
       }
-      closeModal();
-    } catch (err: any) {
-      toast(err?.data?.message ?? "Something went wrong", {
-        type: "error",
-      });
-    }
-  };
+    },
+    [modalType, closeModal, userId, createUser, updateUser],
+  );
 
   const defaultValues = useCallback(async () => {
     if (!userId) return {} as User;
@@ -105,17 +108,17 @@ export function Users() {
 
   const handleNextPage = useCallback(() => {
     const newOffset = String(
-      Number(queryParams.offset) + Number(queryParams.limit),
+      Number(queryParams.offset ?? 0) + Number(queryParams.limit ?? 0),
     );
-    setQueryParams({ offset: newOffset });
+    setQueryParams({ limit: queryParams.limit, offset: newOffset });
   }, [queryParams, setQueryParams]);
 
   const handlePrevPage = useCallback(() => {
     const newOffset = Math.max(
-      Number(queryParams.offset) - Number(queryParams.limit),
+      Number(queryParams.offset ?? 0) - Number(queryParams.limit ?? 0),
       0,
     );
-    setQueryParams({ offset: String(newOffset) });
+    setQueryParams({ limit: queryParams.limit, offset: String(newOffset) });
   }, [queryParams, setQueryParams]);
 
   return (
@@ -156,7 +159,7 @@ export function Users() {
           </ModalContent>
         </Modal>
       ))}
-      <Dialog
+      <DeleteUserDialog
         isOpen={userId !== null && modalType === "delete"}
         onApply={handleApplyDelete}
         onDismiss={closeModal}

@@ -1,5 +1,5 @@
 import React, { ComponentPropsWithoutRef, forwardRef, useId } from 'react';
-import { checkbox, CheckboxVariants } from './checkbox.theme';
+import { checkbox, CheckboxVariants } from './Checkbox.theme';
 
 type CheckboxProps = Omit<ComponentPropsWithoutRef<'input'>, 'type'> &
   CheckboxVariants & {

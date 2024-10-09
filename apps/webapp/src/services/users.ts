@@ -42,11 +42,11 @@ export const usersApi = createApi({
       }),
       transformResponse: (response: { data: User }) => response.data,
       async onQueryStarted(newUser, { dispatch, queryFulfilled, getState }) {
-        const tempId = Date.now();
 
         // Store patch results along with endpointName and originalArgs
         const patchResults: Array<PatchResult> = [];
         const state = getState();
+        const tempId = Math.random() * 1000
 
         const cacheEntries = usersApi.util.selectInvalidatedBy(state, [
           { type: "Users", id: "LIST" },
@@ -59,7 +59,7 @@ export const usersApi = createApi({
               originalArgs,
               (draft) => {
                 if (isUserListResponse(draft)) {
-                  draft.data.push({
+                  draft.data.unshift({
                     ...newUser,
                     id: tempId,
                     createdAt: new Date().toISOString(),
@@ -70,7 +70,7 @@ export const usersApi = createApi({
               },
             ),
           );
-          patchResults.push({ patchResult, endpointName, originalArgs });
+          patchResults.unshift({ patchResult, endpointName, originalArgs });
         });
 
         try {

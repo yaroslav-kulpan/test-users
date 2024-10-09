@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, PropsWithChildren } from "react";
-import { modalTitleStyles } from "./modal.theme";
+import { modalTitleStyles } from "./Modal.theme";
 import React from "react";
 
 type IModalTitleProps = ComponentPropsWithoutRef<"div">;

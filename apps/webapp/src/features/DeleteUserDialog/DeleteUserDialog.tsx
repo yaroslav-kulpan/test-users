@@ -13,7 +13,7 @@ type DeleteConfirmProps = {
   onDismiss: () => void;
 };
 
-export function Dialog({ isOpen, onDismiss, onApply }: DeleteConfirmProps) {
+export function DeleteUserDialog({ isOpen, onDismiss, onApply }: DeleteConfirmProps) {
   return (
     <HeadlessUIDialog
       open={isOpen}

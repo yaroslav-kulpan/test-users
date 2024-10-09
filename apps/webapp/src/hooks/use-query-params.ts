@@ -7,11 +7,10 @@ type QueryParams = {
 
 const getSearchParams = () => {
   const searchParams = new URLSearchParams(window.location.search);
-  const entries = Array.from(searchParams.entries());
-  return entries.reduce<QueryParams>((acc, [key, value]) => {
-    acc[key] = value;
-    return acc;
-  }, {});
+  return {
+    limit: searchParams.get("limit") ?? "10",
+    offset: searchParams.get("offset") ?? "0",
+  };
 };
 
 export function useQueryParams() {

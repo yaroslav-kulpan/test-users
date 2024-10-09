@@ -13,7 +13,7 @@ export class UserService {
       include: [{ model: UserProfileModel, as: 'profile' }],
       limit,
       offset,
-      order: [['createsAt', 'DESC']],
+      order: [['createdAt', 'DESC']],
     });
     return {
       users: allUser.rows,

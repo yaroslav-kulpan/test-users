@@ -1,7 +1,7 @@
-import React, { ComponentPropsWithoutRef } from 'react';
-import { tableCell } from './table.theme';
+import React, { ComponentPropsWithoutRef } from "react";
+import { tableCell } from "./Table.theme";
 
-type TableCellProps = ComponentPropsWithoutRef<'td'>;
+type TableCellProps = ComponentPropsWithoutRef<"td">;
 
 export const TableCell = React.forwardRef<
   HTMLTableCellElement,
