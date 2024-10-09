@@ -22,12 +22,12 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         >
           {label}
         </label>
-        <div className="mt-2">
+        <div className="relative mt-2">
           <select id={id} ref={ref} className={selectClasses} {...props}>
             {children}
           </select>
           {error && (
-            <p className="mt-1 text-sm text-red-600" id={`${id}-error`}>
+            <p className="absolute mt-1 text-sm text-red-600" id={`${id}-error`}>
               {error}
             </p>
           )}

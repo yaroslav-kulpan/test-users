@@ -22,10 +22,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         >
           {label}
         </label>
-        <div className="mt-2">
+        <div className="relative mt-2">
           <input {...props} ref={ref} id={id} className={inputClasses} />
           {error && (
-            <p className="mt-1 text-sm text-red-600" id={`${id}-error`}>
+            <p className="absolute mt-1 text-sm text-red-600" id={`${id}-error`}>
               {error}
             </p>
           )}
