@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "start:api": "cd ./apps/api && npm run start",
+    "start:api": "node scripts/build-scripts/start-api.js",
     "build:api": "node scripts/build-scripts/build-api.js",
     "dev": "turbo dev",
     "lint": "turbo lint",
