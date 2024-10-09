@@ -13,4 +13,4 @@ function runCommand(command) {
 
 // Sequentially run npm scripts
 console.log('Starting production server...');
-runCommand('turbo build-scripts --filter=\"{./apps/api}...\"');
+runCommand('turbo build --filter=\"{./apps/api}...\"');
